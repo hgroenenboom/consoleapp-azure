@@ -1,0 +1,21 @@
+# Starter pipeline
+trigger:
+  - main
+
+jobs:
+  - job: windows
+    timeoutInMinutes: 360
+    pool:
+      vmImage: 'windows-2022'
+
+    steps:
+      - checkout: self
+        submodules: true
+        persistCredentials: true
+        fetchDepth: 1
+
+      - task: VSBuild@1
+        inputs:
+          solution: 'consoleapp.sln'
+          configuration: 'Release'
+          msbuildArgs: '/clp:ErrorsOnly'
